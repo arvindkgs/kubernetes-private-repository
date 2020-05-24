@@ -60,14 +60,14 @@
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
+			<url>https://repo.spring.io/snapshot</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
+			<url>https://repo.spring.io/snapshot</url>
 		</pluginRepository>
 	</pluginRepositories>
 </project>
