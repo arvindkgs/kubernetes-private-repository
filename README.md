@@ -175,6 +175,4 @@ You can now use Docker at the command line of your host Mac/Linux machine to com
 $ docker ps
 ```
 
-The instructions and code are available at [github](https://github.com/arvindkgs/kubernetes-private-repository)
-
 More info [here](https://kubernetes.io/docs/setup/learning-environment/minikube/#use-local-images-by-re-using-the-docker-daemon)
