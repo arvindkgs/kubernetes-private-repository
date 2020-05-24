@@ -38,7 +38,17 @@ This should list as:
 
 ### Start Minikube
 
+* To start minikube configured to use the private registry, run below command. NOTE: *Replace DRIVER with correct driver which is one of: [virtualbox, vmwarefusion, kvm2, kvm, hyperkit]*
+```
+$ minikube start --vm-driver=DRIVER --insecure-registry="IP:5000"
+```
 
+### Start private registry
+
+* If running on local start registry as:
+```
+$ docker run -d -p 5000:5000 --restart=always --name registry registry:2
+```
 
 ## Getting Started
 
@@ -66,7 +76,6 @@ public class Home {
 ```
 
 
-
 Containerize (`Dockerfile`):
 
 ```
@@ -90,16 +99,16 @@ Run and test...
 
 ```
 $ ./mvnw package
-$ docker build -t localhost:5000/apps/demo .
-$ docker run -p 8080:8080 localhost:5000/apps/demo
+$ docker build -t IP:5000/apps/demo .
+$ docker run -p 8080:8080 IP:5000/apps/demo
 $ curl localhost:8080
 Hello World
 ```
 
-Stash the image for later in our local repository (which was started with `kind-setup` if you used that):
+Stash the image to our private repository:
 
 ```
-$ docker push localhost:5000/apps/demo
+$ docker push IP:5000/apps/demo
 ```
 
 ## Deploy to Kubernetes
@@ -107,17 +116,45 @@ $ docker push localhost:5000/apps/demo
 Create a basic manifest:
 
 ```
-$ kubectl create deployment demo --image=localhost:5000/apps/demo --dry-run -o=yaml > deployment.yaml
+$ kubectl create deployment demo --image=IP:5000/apps/demo --dry-run -o=yaml > deployment.yaml
 $ echo --- >> deployment.yaml
-$ kubectl create service clusterip demo --tcp=80:8080 --dry-run -o=yaml >> deployment.yaml
+$ kubectl create service nodeport demo --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
 ```
 
 Apply it:
 
 ```
 $ kubectl apply -f deployment.yaml
-$ kubectl port-forward svc/demo 8080:80
-$ curl localhost:8080
-Hello World
 ```
 
+## Test
+
+Check if deployment is up
+```
+$ kubectl get deployments.app demo
+```
+Next check if service is running
+```
+$ kubectl get service demo
+```
+NOTE: *Make a note of the port. For example if port is mentioned as 8080:32614, then copy 32614. This is the port on which the service is available*
+
+## Consume service
+
+Get IP
+```
+$ kubectl get endpoints kubernetes
+```
+Make a note of the IP, ignore the port number. Example - if endpoint: '192.168.39.138:8443', then IP: 192.168.39.138
+
+Get Port
+```
+$ kubectl get service demo
+```
+Port is the second part of ':' delimiter. Example - if PORT is '8080:32614/TCP', then our port is 32614
+
+Call springboot app, substituting IP below with ip obtained above and PORT with port obtained above
+```
+$ curl IP:PORT
+Hello World
+```
