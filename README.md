@@ -4,7 +4,8 @@ Instructions to build a single node cluster on Minikube with a private repositor
 * [Setup](#setup)
 * [Getting Started](#getting-started)
 * [Deploy to Kubernetes](#deploy-to-kubernetes)
-
+* [Test](#test)
+* [Consume Service](#consume-service)
 ## Pre-requisites
 
 - `jdk11`
