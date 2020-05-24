@@ -6,7 +6,7 @@ Instructions to build a single node cluster on Minikube with a private repositor
 * [Deploy to Kubernetes](#deploy-to-kubernetes)
 * [Test](#test)
 * [Consume Service](#consume-service)
-* [Alternatives](#alternatives)
+* [Tips](#tips)
 ## Pre-requisites
 
 - `jdk11`
@@ -161,7 +161,7 @@ $ curl IP:PORT
 Hello World
 ```
 
-## Alternatives
+## Tips
 
 As a corollary, if you are running a test or doing development and don't want to push your image to a private repository or dockerhub, then you can reuse Minikube's built-in docker daemon. So you can build images inside the same docker daemon as Minikube, which speeds up local experiments.
 
