@@ -174,5 +174,8 @@ You can now use Docker at the command line of your host Mac/Linux machine to com
 ```
 $ docker ps
 ```
-
+Next you need add following line to deployments.yaml after name of image @line:23
+```
+imagePullPolicy: never
+```
 More info [here](https://kubernetes.io/docs/setup/learning-environment/minikube/#use-local-images-by-re-using-the-docker-daemon)
